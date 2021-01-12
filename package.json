@@ -2,8 +2,9 @@
     "name": "tasm-asm",
     "displayName": "TASM_Assembler",
     "description": "TASM Assembler support for Visual Studio Code",
-    "version": "0.0.3",
-    "icon": "logo.png",
+    "version": "0.3.0",
+    "repository": "https://github.com/Jeff-Birt/TASM_vsCode_Extension",
+    "icon": "images/logo.png",
     "author": "Jeff Birt",
     "publisher": "Soigeneris",
     "engines": {

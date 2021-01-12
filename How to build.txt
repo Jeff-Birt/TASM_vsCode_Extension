@@ -1,0 +1,21 @@
+First steps, only need to do once.
+
+#1 - You must install Node.js as the program to build the extenion runs in it.
+
+#2 - Install npm which is the program that pacakges the extension. To do this open a Node.js command line and type: npm install -g vsce
+
+$ cd myExtension
+$ vsce package
+# myExtension.vsix generated
+$ vsce publish
+# <publisherID>.myExtension published to VS Code Marketplace
+
+Example:
+cd C:\Users\birtj\OneDrive\Vintage_Computers\Radio_Shack\Programming\tasmDev\TASM\TASM_vsCode_Extension
+
+vsce package 
+
+When prompted with "A 'repository' field is missing from the 'package.json' manifest file. Do you want to continue?" Select Y. This builds a locally installable extesnion but it cannot be published to teh market place.
+
+To install manually, open Extesnsions tab (Ctrl-Shft-X), click on elipsis '...', select 'Install from VSIX...', navigate to the VSIX you just built.
+

@@ -1,0 +1,87 @@
+{
+    "name": "tasm-asm",
+    "displayName": "TASM_Assembler",
+    "description": "TASM Assembler support for Visual Studio Code",
+    "version": "0.0.3",
+    "icon": "logo.png",
+    "author": "Jeff Birt",
+    "publisher": "Soigeneris",
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "assembly",
+        "TASM"
+    ],
+    "license": "SEE LICENSE IN LICENSE",
+    "contributes": {
+        "languages": [
+            {
+                "id": "TASM-6502",
+                "aliases": [
+                    "TASM_6502 Assembly"
+                ],
+                "extensions": [
+                    ".asm"
+                ],
+                "configuration": "./TASM.configuration.json"
+            },
+            {
+                "id": "TASM-8085",
+                "aliases": [
+                    "TASM_8085 Assembly"
+                ],
+                "extensions": [
+                    ".asm"
+                ],
+                "configuration": "./TASM.configuration.json"
+            },
+            {
+                "id": "TASM-Z80",
+                "aliases": [
+                    "TASM_Z80 Assembly"
+                ],
+                "extensions": [
+                    ".asm"
+                ],
+                "configuration": "./TASM.configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "TASM-6502",
+                "scopeName": "source.tasm6502",
+                "path": "./syntaxes/TASM-6502.tmLanguage"
+            },
+            {
+                "language": "TASM-8085",
+                "scopeName": "source.tasm8085",
+                "path": "./syntaxes/TASM-8085.tmLanguage"
+            },
+            {
+                "language": "TASM-Z80",
+                "scopeName": "source.tasmZ80",
+                "path": "./syntaxes/TASM-Z80.tmLanguage"
+            }
+        ],
+        "problemMatchers": [
+            {
+                "name": "tasm",
+                "owner": "asm",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*) (line )(\\d+):(.*)$",
+                    "file": 1,
+                    "location": 3,
+                    "message": 4
+                }
+            }
+        ]
+    }
+}

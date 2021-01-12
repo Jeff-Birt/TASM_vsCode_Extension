@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>asm</string>
+		<string>s</string>
+		<string>$C</string>
+	</array>
+	<key>name</key>
+	<string>TASM_8085 Assembly</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>;.*$</string>
+			<key>name</key>
+			<string>comment.line</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>TASM Directives</string>
+			<key>match</key>
+			<string>(?i)(\b(ADDINSTR|AVSYM|BASIC|CHK|CODES|NOCODES|DEFINE|DEFCONT|ECHO|EJECT|ELSE|END|ENDIF|EQU|EXPORT|FILL|IFDEF|IFNDEF|IF|INCLUDE|LIST|NOLIST|LOCALLABELCHAR|LSFIRST|MSFIRST|MODULE|ORG|PAGE|NOPAGE|SET|SYM|AVSYM|TEST|TITLE)\b)</string>
+			<key>name</key>
+			<string>keyword.control.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Asm data definition directives</string>
+			<key>match</key>
+			<string>(?i)(\b(block|bseg|cseg|dseg|nseg|xseg|byte|db|dw|word)\b)</string>
+			<key>name</key>
+			<string>storage.type.datadef.asm</string>
+		</dict>		
+		<dict>
+		<key>comment</key>
+			<string>Flags</string>
+			<key>match</key>
+			<string>\b(S|Z|AC|P|CY)\b</string>
+			<key>name</key>
+			<string>support.type.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Single-line string</string>
+			<key>match</key>
+			<string>'[^']*'</string>
+			<key>name</key>
+			<string>string.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Single-line string</string>
+			<key>match</key>
+			<string>"[^"]*"</string>
+			<key>name</key>
+			<string>string.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>8085 Mnemonics</string>
+			<key>match</key>			
+			<string>(?i)(\b(ACI|ADC|ADD|ADI|ANA|ANI|CALL|CC|CNC|CZ|CNZ|CP|CM|CPE|CPO|CMA|CMC|CMP|CMP|CPI|DAA|DAD|DCR|DCX|DI|EI|HLT|IN|INR|JMP|JC|JNC|JZ|JNZ|JM|JP|JPE|JPO|LDA|LDAX|LHLD|LXI|MOV|MVI|NOP|ORA|ORI|OUT|PCHL|POP|PUSH|RAL|RAR|RLC|RRC|RET|RZ|RNZ|RC|RNC|RM|RP|RPE|RPO|RIM|RST|SBB|SBI|SUB|SUI|SHLD|SIM|SPHL|STA|STAX|STC|XRA|XRI|XCHG|XTHL)\b)</string>
+			<key>name</key>
+			<string>keyword.mnemonic.asm</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\d{5}</string>
+			<key>name</key>
+			<string>invalid</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>8 bit register set</string>
+			<key>match</key>
+			<string>(?i)(\b(a|b|c|d|e|h|l|f)\b)</string>
+			<key>name</key>
+			<string>variable.parameter.register.asm</string>
+		</dict>
+			<dict>
+			<key>comment</key>
+			<string>16 bit register set</string>
+			<key>match</key>
+			<string>(?i)(\baf')|(\b(bc|de|hl|m|sp|pc)\b)</string>
+			<key>name</key>
+			<string>variable.parameter.register.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>HEX/DEC/BIN number</string>
+			<key>match</key>
+			<string>(?i)(%[01]+\b)|(\b[01]+b\b)|((#|\$)[0-9a-f]+\b)|(\b([0-9]+|0x[0-9a-f]+|[0-9][0-9a-f]*h)\b)</string>
+			<key>name</key>
+			<string>constant.numeric.asm</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.tasm8085</string>
+	<key>uuid</key>
+	<string>5075ff92-54a7-11e6-beb8-9e71128cae87</string>
+</dict>
+</plist>

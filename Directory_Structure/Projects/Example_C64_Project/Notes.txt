@@ -1,0 +1,10 @@
+Hello World for the C64 using TASM
+
+We use TASM to create a .prg file for a Commodore 64. The first two bytes 
+of a .prg file is the load address of teh program. The C64 also uses PETSCII
+rather than ASCII so we have to include test as byte arrays. More notes include
+program comments.
+
+To build we need to tell TASM to create a contiguous binary file. That is it
+needs to be binary output that starts at the starting address and ends at the
+end address with all memory addresses filled. More notes in built.bat

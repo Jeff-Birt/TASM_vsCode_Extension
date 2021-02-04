@@ -1,0 +1,8 @@
+Random 68HC11 program example
+
+This is a bit of test code for a Motorola 68HC11 I wrote many years ago. It 
+was written for the Motorola assembler originally and I dug it out to see what
+it would take to convert it to TASM syntax. It was fairly easy to convert.
+
+To build we need to tell TASM to create a .s19. This file format is similar 
+to the Intel .hex format and was commonly used on 68HC11 program loaders.

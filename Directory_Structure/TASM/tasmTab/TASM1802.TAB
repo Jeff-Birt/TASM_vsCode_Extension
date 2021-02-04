@@ -1,0 +1,172 @@
+"TASM 1802 Assembler.    "
+/****************************************************************************
+/* $Id: tasm1820.tab 1.1 2003/08/20 13:23:15 sbrune Exp $
+/****************************************************************************
+/* This is the instruction set definition table 
+/*   for the 1802 version of TASM.
+/*
+/*      Class bits assigned as follows:
+/*        Bit-0 = 1802         (base instruction set)
+/*  See TASM manual for info on table structure.
+/*
+/*  CAUTION - TASM will allow assembly of the following illegal
+/*            assembler constructs:
+/*
+/*            INP 0 --------- assembles as 60h (IRX instruction)
+/*            LDN 0, LDN R0 - assembles as 00h (IDL instruction)
+/*            OUT 8 --------- assembles as 68h (illegal OpCode)
+/*
+/* sbrune 2004/08/04
+/*   Added instructions to replace some macro definitions:
+/*       Old Macro                  New Instruction        Assembles As
+/*       CALL(1234h)         =>     CALL 1234h      =>     D4 12 34
+/*       RETN                =>     RETN            =>     D5
+/*       LDI  L0(1234h)      =>     LDI  LO,1234h   =>     F8 34 
+/*       LDI  HI(1234h)      =>     LDI  HI,1234h   =>     F8 12
+/*
+/* sbrune 2004/09/16
+/*   Changed table so that labels can start with the R character.
+/*   Details:
+/*     Added register definitions
+/*     Replaced RA - RF, R* with !
+
+/*REGISTER DEFINITIONS
+/*
+/*      REG   OP    BYTES   */
+/*--------------------------*/
+.REGSET R0    00   1
+.REGSET R1    01   1
+.REGSET R2    02   1
+.REGSET R3    03   1
+.REGSET R4    04   1
+.REGSET R5    05   1
+.REGSET R6    06   1
+.REGSET R7    07   1
+.REGSET R8    08   1
+.REGSET R9    09   1
+.REGSET RA    0A   1
+.REGSET RB    0B   1
+.REGSET RC    0C   1
+.REGSET RD    0D   1
+.REGSET RE    0E   1
+.REGSET RF    0F   1
+
+/*INSTRUCTION DEFINITIONS
+/*
+/*INSTR ARGS    OP  BYTES   RULE        CLASS   SHIFT   OR      */
+/*--------------------------------------------------------------*/
+ADC     ""      74  1       NOP         1
+ADCI    *       7C  2       NOP         1
+ADD     ""      F4  1       NOP         1
+ADI     *       FC  2       NOP         1
+AND     ""      F2  1       NOP         1
+ANI     *       FA  2       NOP         1
+
+B1      *       34  2       JTHISPAGE   1
+B2      *       35  2       JTHISPAGE   1
+B3      *       36  2       JTHISPAGE   1
+B4      *       37  2       JTHISPAGE   1
+BDF     *       33  2       JTHISPAGE   1
+BGE     *       33  2       JTHISPAGE   1
+BL      *       3B  2       JTHISPAGE   1
+BM      *       3B  2       JTHISPAGE   1
+BN1     *       3C  2       JTHISPAGE   1
+BN2     *       3D  2       JTHISPAGE   1
+BN3     *       3E  2       JTHISPAGE   1
+BN4     *       3F  2       JTHISPAGE   1
+BNF     *       3B  2       JTHISPAGE   1
+BNQ     *       39  2       JTHISPAGE   1
+BNZ     *       3A  2       JTHISPAGE   1
+BPZ     *       33  2       JTHISPAGE   1
+BQ      *       31  2       JTHISPAGE   1
+BR      *       30  2       JTHISPAGE   1
+BZ      *       32  2       JTHISPAGE   1
+
+CALL    *       D4  3       SWAP        1
+
+DEC     !       20  1       NOP
+DEC     *       20  1       TDMA        1       0       0F
+DIS     ""      71  1       NOP         1
+
+GHI     !       90  1       NOP
+GHI     *       90  1       TDMA        1       0       0F
+GLO     !       80  1       NOP
+GLO     *       80  1       TDMA        1       0       0F
+
+IDL     ""      00  1       NOP         1
+INC     !       10  1       NOP
+INC     *       10  1       TDMA        1       0       0F
+INP     *       68  1       TDMA        1       0       07
+IRX     ""      60  1       NOP         1
+
+LBDF    *       C3  3       SWAP        1
+LBNF    *       CB  3       SWAP        1
+LBNQ    *       C9  3       SWAP        1
+LBNZ    *       CA  3       SWAP        1
+LBQ     *       C1  3       SWAP        1
+LBR     *       C0  3       SWAP        1
+LBZ     *       C2  3       SWAP        1
+LDA     !       40  1       NOP
+LDA     *       40  1       TDMA        1       0       0F
+LDI     HI,*    F8  2       SWAP        1
+LDI     LO,*    F8  2       NOP         1
+LDI     *       F8  2       NOP         1
+LDN     !       00  1       NOP
+LDN     *       00  1       TDMA        1       0       0F
+LDX     ""      F0  1       NOP         1
+LDXA    ""      72  1       NOP         1
+LSDF    ""      CF  1       NOP         1
+LSIE    ""      CC  1       NOP         1
+LSKP    ""      C8  1       NOP         1
+LSNF    ""      C7  1       NOP         1
+LSNQ    ""      C5  1       NOP         1
+LSNZ    ""      C6  1       NOP         1
+LSQ     ""      CD  1       NOP         1
+LSZ     ""      CE  1       NOP         1
+
+MARK    ""      79  1       NOP         1
+
+NBR     ""      38  1       NOP         1
+NLBR    ""      C8  1       NOP         1
+NOP     ""      C4  1       NOP         1
+
+OR      ""      F1  1       NOP         1
+ORI     *       F9  2       NOP         1
+OUT     *       60  1       TDMA        1       0       07
+
+PHI     !       B0  1       NOP
+PHI     *       B0  1       TDMA        1       0       0F
+PLO     !       A0  1       NOP
+PLO     *       A0  1       TDMA        1       0       0F
+
+REQ     ""      7A  1       NOP         1
+RET     ""      70  1       NOP         1
+RETN    ""     D5  1       NOP         1
+RSHL    ""      7E  1       NOP         1
+RSHR    ""      76  1       NOP         1
+
+SAV     ""      78  1       NOP         1
+SD      ""      F5  1       NOP         1
+SDB     ""      75  1       NOP         1
+SDBI    *       7D  2       NOP         1
+SDI     *       FD  2       NOP         1
+SEP     !       D0  1       NOP
+SEP     *       D0  1       TDMA        1       0       0F
+SEQ     ""      7B  1       NOP         1
+SEX     !       E0  1       NOP
+SEX     *       E0  1       TDMA        1       0       0F
+SHL     ""      FE  1       NOP         1
+SHLC    ""      7E  1       NOP         1
+SHR     ""      F6  1       NOP         1
+SHRC    ""      76  1       NOP         1
+SKP     ""      38  1       NOP         1
+SM      ""      F7  1       NOP         1
+SMB     ""      77  1       NOP         1
+SMBI    *       7F  2       NOP         1
+SMI     *       FF  2       NOP         1
+STR     !       50  1       NOP
+STR     *       50  1       TDMA        1       0       0F
+STXD    ""      73  1       NOP         1
+
+XOR     ""      F3  1       NOP         1
+XRI     *       FB  2       NOP         1

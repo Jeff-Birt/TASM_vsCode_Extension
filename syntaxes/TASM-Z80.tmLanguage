@@ -62,7 +62,7 @@
 			<key>comment</key>
 			<string>Z80 Mnemonics</string>
 			<key>match</key>			
-			<string>(?i)(\b(ADC|ADD|AND|BIT|CALL|CCF|CP|CPD|CPDR|CPI|CPIR|CPL|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|INC|IND|INDR|INI|INIR|IN|JP|JR|LD|LDD|LDDR|LDI|LDIR|NEG|NOP|OR|OUT|OUTD|OTDR|OUTI|OTIR|OUT|POP|PUSH|RES|RET|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SRA|SRL|SUB|XOR)\b)</string>
+			<string>(?i)(\b(ADC|ADD|AND|BIT|CALL|CCF|CP|CPD|CPDR|CPI|CPIR|CPL|DAA|DEC|DI|DJNZ|EI|EX|EXX|HALT|IM|IN|IN0|INC|IND|INDR|INI|INIR|IN|JP|JR|LD|LDD|LDDR|LDI|LDIR|MLT|NEG|NOP|OR|OUT|OUT0|OUTD|OTDM|OTDR|OTDMR|OTMR|OTIM|OTIMR|OTIR|OUT|OUTI|POP|PUSH|RES|RET|RETI|RETN|RL|RLA|RLC|RLCA|RLD|RR|RRA|RRC|RRCA|RRD|RST|SBC|SCF|SET|SLA|SLP|SRA|SRL|SUB|TST|XOR)\b)</string>
 			<key>name</key>
 			<string>keyword.mnemonic.asm</string>
 		</dict>
@@ -76,7 +76,7 @@
 		<key>comment</key>
 			<string>8 bit register set</string>
 			<key>match</key>
-			<string>(?i)(\b(a|b|c|d|e|h|l|i|r|xl|lx|xh|hx|ixl|ixh|yl|ly|yh|hy|iyl|iyh)\b)</string>
+			<string>(?i)(\b(a|b|c|d|e|h|hy|i|iyh|iyl|ixh|ixl|l|lx|ly|m|nc|nz|pe|po|r|xl|xh|hx|yl|yh)\b)</string>
 			<key>name</key>
 			<string>variable.parameter.register.asm</string>
 		</dict>

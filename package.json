@@ -2,7 +2,7 @@
     "name": "tasm-asm",
     "displayName": "TASM_Assembler",
     "description": "TASM Assembler support for Visual Studio Code",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "repository": "https://github.com/Jeff-Birt/TASM_vsCode_Extension",
     "icon": "images/logo.png",
     "author": "Jeff Birt",
@@ -20,6 +20,17 @@
     "license": "SEE LICENSE IN LICENSE",
     "contributes": {
         "languages": [
+            {
+                "id": "TASM-1802",
+                "aliases": [
+                    "TASM_1802 Assembly"
+                ],
+                "extensions": [
+                    ".asm",
+                    ".1802.asm"
+                ],
+                "configuration": "./TASM.configuration.json"
+            },
             {
                 "id": "TASM-6502",
                 "aliases": [
@@ -39,6 +50,17 @@
                 "extensions": [
                     ".asm",
                     ".68XX.asm"
+                ],
+                "configuration": "./TASM.configuration.json"
+            },
+            {
+                "id": "TASM-8080",
+                "aliases": [
+                    "TASM_8080 Assembly"
+                ],
+                "extensions": [
+                    ".asm",
+                    ".8080.asm"
                 ],
                 "configuration": "./TASM.configuration.json"
             },
@@ -67,6 +89,11 @@
         ],
         "grammars": [
             {
+                "language": "TASM-1802",
+                "scopeName": "source.tasm1802",
+                "path": "./syntaxes/TASM-1802.tmLanguage"
+            },
+            {
                 "language": "TASM-6502",
                 "scopeName": "source.tasm6502",
                 "path": "./syntaxes/TASM-6502.tmLanguage"
@@ -75,6 +102,11 @@
                 "language": "TASM-68XX",
                 "scopeName": "source.tasm68XX",
                 "path": "./syntaxes/TASM-68XX.tmLanguage"
+            },
+            {
+                "language": "TASM-8080",
+                "scopeName": "source.tasm8080",
+                "path": "./syntaxes/TASM-8080.tmLanguage"
             },
             {
                 "language": "TASM-8085",

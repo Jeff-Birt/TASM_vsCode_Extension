@@ -1,0 +1,3 @@
+A series of small example programs for RCA 1802 Microprocessor
+
+These were written to test various aspects of 1802 functionality to verify proper operation of a group of processors. These were run on an 1802 tester made with an Arduino Mega: https://github.com/Jeff-Birt/RCA1802_Tester

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>asm</string>
+		<string>s</string>
+		<string>$C</string>
+	</array>
+	<key>name</key>
+	<string>TASM_1802 Assembly</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>;.*$</string>
+			<key>name</key>
+			<string>comment.line</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>TASM Directives</string>
+			<key>match</key>
+			<string>(?i)(\b(ADDINSTR|AVSYM|BASIC|CHK|CODES|NOCODES|DEFINE|DEFCONT|ECHO|EJECT|ELSE|END|ENDIF|EQU|EXPORT|FILL|IFDEF|IFNDEF|IF|INCLUDE|LIST|NOLIST|LOCALLABELCHAR|LSFIRST|MSFIRST|MODULE|ORG|PAGE|NOPAGE|SET|SYM|AVSYM|TEST|TITLE)\b)</string>
+			<key>name</key>
+			<string>keyword.control.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Asm data definition directives</string>
+			<key>match</key>
+			<string>(?i)(\b(block|bseg|cseg|dseg|nseg|xseg|byte|db|dw|word)\b)</string>
+			<key>name</key>
+			<string>storage.type.datadef.asm</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>Flags</string>
+			<key>match</key>
+			<string>\b(S|Z|AC|P|CY)\b</string>
+			<key>name</key>
+			<string>support.type.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Single-line string</string>
+			<key>match</key>
+			<string>'[^']*'</string>
+			<key>name</key>
+			<string>string.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Single-line string</string>
+			<key>match</key>
+			<string>"[^"]*"</string>
+			<key>name</key>
+			<string>string.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>1802 Mnemonics</string>
+			<key>match</key>			
+			<string>(?i)(\b(ADC|ADCI|ADD|ADI|AND|ANI|B1|B2|B3|B4|BDF|BGE|BL|BM|BN1|BN2|BN3|BN4|BNF|BNQ|BNZ|BQ|BR|BZ|CALL|DEC|DIS|GHI|GLO|IDL|INC|INP|IRX|LBDF|LBNF|LBNQ|LBNZ|LBQ|LBR|LBZ|LDA|LDI|LDN|LDX|LDXA|LSDF|LSIE|LSKP|LSNF|LSNQ|LSNZ|LSQ|LSZ|MARK|NBR|NLBR|NOP|OR|ORI|OUT|PHI|PLO|REQ|RET|RETN|RSHL|RSHR|SAV|SD|SDB|SDBI|SDI|SEP|SEQ|SEX|SHL|SHLC|SHR|SHRC|SKP|SM|SMB|SMBI|SMI|STR|STXD|XOR|XRI)\b)</string>
+			<key>name</key>
+			<string>keyword.mnemonic.asm</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\d{5}</string>
+			<key>name</key>
+			<string>invalid</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>8 bit register set</string>
+			<key>match</key>
+			<string>(?i)(\b(R0|R1|R2|R3|R4|R5|R6|R7|R8|R9|RA|RB|RC|RD|RE|RF)\b)</string>
+			<key>name</key>
+			<string>variable.parameter.register.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>HEX/DEC/BIN number</string>
+			<key>match</key>
+			<string>(?i)(%[01]+\b)|(\b[01]+b\b)|((#|\$)[0-9a-f]+\b)|(\b([0-9]+|0x[0-9a-f]+|[0-9][0-9a-f]*h)\b)</string>
+			<key>name</key>
+			<string>constant.numeric.asm</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.tasm1802</string>
+	<key>uuid</key>
+	<string>5075ff92-54a7-11e6-beb8-9e71128cafff</string>
+</dict>
+</plist>
+

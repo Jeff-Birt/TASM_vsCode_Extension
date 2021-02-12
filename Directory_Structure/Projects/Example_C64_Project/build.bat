@@ -10,5 +10,7 @@ REM '-c' contigious file, 'g3' binary output, '-65' 6502 table
 @echo off
 REM Delete any existing .prg files and rename the .obj file
 REM TASM built to .prg
-del *.prj
-ren *.obj *.prj
+del *.prg
+ren *.obj *.prg
+REM can autoload in VICE, "pathtovice" is your path to VICE
+REM pathtovice\x64sc hello.prg

@@ -2,8 +2,10 @@
 
 This extension for Visual Studio Code provides the following features:
 
+* Syntax Highlighting for 1802 Assembly
 * Syntax Highlighting for 6502 Assembly
 * Syntax Highlighting for 6800 family Assembly
+* Syntax Highlighting for 8080 Assembly
 * Syntax Highlighting for 8085 Assembly
 * Syntax Highlighting for Z80  Assembly
 * Problem Matching for TASM assembler output

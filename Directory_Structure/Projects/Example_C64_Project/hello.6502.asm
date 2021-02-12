@@ -1,16 +1,17 @@
-; The first ype bytes of a .org file provide the loading address for the
-; program (low byte, hi byte). We have to 'fake' that here by telling 
-; TASM to pop those bytes in before the actual start address of our program. 
-; We use'start_address- 2' as are fake starting address.
-*=$07FF
+; The first two bytes of a .prg file provide the loading address for the
+; program (low byte, hi byte). We have to tell TASM to put those two bytes in 
+; first, i.e. at desired start address - 2. 
+
+       .org $0801 - 2       ;*=$07FF
+
        .BYTE  $01, $08
-; The following byte array creates the basic line of 
-; 10 SYS (2304) , which calls our machine code
-*=$0801
+
+; This byte array creates the BASIC line: 10 SYS (2304)
+; at the BASIC start address of *=$0801
        .BYTE  $0E, $08, $0A, $00, $9E, $20, $28
        .BYTE  $32, $33, $30, $34, $29, $00, $00, $00
 
-*=$0900
+*=$0900       ; alterntive form of .org
 
 start  LDX #$0
 
@@ -22,8 +23,6 @@ cycle  LDA hworld,X
        JMP cycle
 exit   RTS
 
-; The C64 uses PETSCII not ASCII so we can't use .text to encode our text as a
-; byte array. We have to convert our text to PETSCII values manually.
 hworld:
        ;.text "hello world!"
        ;.BYTE 0

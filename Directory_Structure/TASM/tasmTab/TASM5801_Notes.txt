@@ -1,0 +1,25 @@
+"TASM lh5801 Assembler.     "
+/******************************************************************************
+/* $Id: tasm5801.tab 1.0 2021/02/18 14:31:22 Jeff Birt
+/******************************************************************************
+/* This is the instruction set definition table for the Sharp lh5801 
+/*      by Jeff Birt, based on tasm80.tab from TASM 3.2
+/*
+/*      Class bits assigned as follows:
+/*        Bit-0 = Sharp syntax                (common opcodes == class 3)
+/*        Bit-1 = Z80   syntax                (common opcodes == class 3)
+/*        Bit-2 = Sharp syn. Enhanced Branch  (Requires TASM > 3.23 with)
+/*        Bit-3 = Z80   syn. Enhanced Branch  (R4 rule mode see note1.)
+/* See TASM manual for info on table structure.
+/*
+/* Note1: R4 relative branch rule added to TASM 3.23 by Jeff Birt.
+/*        Supports the lh5801's separate forward/back branch instructions
+/*        that take a full unsigned byte as an argument. This modification
+/*        allows use such as: BZR label_name
+/*
+/*        For older version add the following two macros to your project:       
+/*        #define   BRB(n)    $+2-n  ; calculate backward branch
+/*        #define   BRF(n)    $+n    ; calculate forward branch
+/*        use: BCH- (BRB(label_name)) or BCH+ (BRF(label_name))
+/*        
+/*---------------------------------------------------------------------------*/

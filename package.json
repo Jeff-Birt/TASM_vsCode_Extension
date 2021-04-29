@@ -2,7 +2,7 @@
     "name": "tasm-asm",
     "displayName": "TASM_Assembler",
     "description": "TASM Assembler support for Visual Studio Code",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "repository": "https://github.com/Jeff-Birt/TASM_vsCode_Extension",
     "icon": "images/logo.png",
     "author": "Jeff Birt",
@@ -76,6 +76,17 @@
                 "configuration": "./TASM.configuration.json"
             },
             {
+                "id": "TASM-lh5801",
+                "aliases": [
+                    "TASM_lh5801 Assembly"
+                ],
+                "extensions": [
+                    ".asm",
+                    ".lh5801.asm"
+                ],
+                "configuration": "./TASM.configuration.json"
+            },
+            {
                 "id": "TASM-Z80",
                 "aliases": [
                     "TASM_Z80 Assembly"
@@ -112,6 +123,11 @@
                 "language": "TASM-8085",
                 "scopeName": "source.tasm8085",
                 "path": "./syntaxes/TASM-8085.tmLanguage"
+            },
+            {
+                "language": "TASM-lh5801",
+                "scopeName": "source.tasmlh5801",
+                "path": "./syntaxes/TASM-lh5801.tmLanguage"
             },
             {
                 "language": "TASM-Z80",

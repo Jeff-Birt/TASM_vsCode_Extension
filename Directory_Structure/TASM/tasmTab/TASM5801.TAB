@@ -1,0 +1,1060 @@
+"TASM lh5801 Assembler.     "
+/******************************************************************************
+/* $Id: tasm5801.tab 1.0 2021/02/18 14:31:22 Jeff Birt
+/******************************************************************************
+/* This is the instruction set definition table for the Sharp lh5801
+/*      by Jeff Birt, based on tasm80.tab from TASM 3.2
+/*
+/*      Class bits assigned as follows:
+/*        Bit-0 = Sharp syntax                (common opcodes == class 3)
+/*        Bit-1 = Z80   syntax                (common opcodes == class 3)
+/*        Bit-2 = Sharp syn. Enhanced Branch  (Requires TASM > 3.23 with)
+/*        Bit-3 = Z80   syn. Enhanced Branch  (R4 rule mode see note1.)
+/* See TASM manual for info on table structure.
+/*
+/* Note1: R4 relative branch rule added to TASM 3.23 by Jeff Birt.
+/*        Supports the lh5801's separate forward/back branch instructions
+/*        that take a full unsigned byte as an argument. This modification
+/*        allows use such as: BZR label_name
+/*
+/*        For older version add the following two macros to your project:       
+/*        #define   BRB(n)    $+2-n  ; calculate backward branch
+/*        #define   BRF(n)    $+n    ; calculate forward branch
+/*        use: BCH- (BRB(label_name)) or BCH+ (BRF(label_name))
+/*        
+/*---------------------------------------------------------------------------*/
+
+.MSFIRST
+.NOARGSHIFT
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ADC     XL      02      1       NOP     1
+ADC     YL      12      1       NOP     1
+ADC     UL      22      1       NOP     1
+ADC     VL      32      1       NOP     1                   ; undocumented
+ADC     XH      82      1       NOP     1
+ADC     YH      92      1       NOP     1
+ADC     UH      A2      1       NOP     1
+ADC     VH      B2      1       NOP     1                   ; undocumented
+ADC     (X)     03      1       NOP     1
+ADC     (Y)     13      1       NOP     1
+ADC     (U)     23      1       NOP     1
+ADC     (V)     33      1       NOP     1                   ; undocumented
+ADC     (*)     A3      3       SWAP    1
+ADC     #(X)    FD03    2       NOP     1
+ADC     #(Y)    FD13    2       NOP     1
+ADC     #(U)    FD23    2       NOP     1
+ADC     #(V)    FD33    2       NOP     1                   ; undocumented
+ADC     #(*)    FDA3    4       SWAP    1
+
+/* Z80 Syntax                                          */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ADC     A,C     02      1       NOP     2
+ADC     A,E     12      1       NOP     2
+ADC     A,L     22      1       NOP     2
+ADC     A,N     32      1       NOP     2
+ADC     A,B     82      1       NOP     2
+ADC     A,D     92      1       NOP     2
+ADC     A,H     A2      1       NOP     2
+ADC     A,M     B2      1       NOP     2
+ADC     A,(BC)  03      1       NOP     2
+ADC     A,(DE)  13      1       NOP     2
+ADC     A,(HL)  23      1       NOP     2
+ADC     A,(MN)  33      1       NOP     2
+ADC#    A,(BC)  FD03    2       NOP     2
+ADC#    A,(DE)  FD13    2       NOP     2
+ADC#    A,(HL)  FD23    2       NOP     2
+ADC#    A,(MN)  FD33    2       NOP     2
+ADC#    A,(*)   FDA3    4       SWAP    2
+ADC     A,(*)   A3      3       SWAP    2
+ADC     A,*     B3      2       NOP     2
+
+/* Z80 Syntax                                          */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ADCD    A,(BC)  8C      1       NOP     2
+ADCD    A,(DE)  9C      1       NOP     2
+ADCD    A,(HL)  AC      1       NOP     2
+ADCD    A,(MN)  BC      1       NOP     2
+ADCD    A,#(BC) FD8C    2       NOP     2
+ADCD    A,#(DE) FD9C    2       NOP     2
+ADCD    A,#(HL) FDAC    2       NOP     2
+ADCD    A,#(MN) FDBC    2       NOP     2
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ADI     A,*     B3      2       NOP     1
+ADI     (X),*   4F      2       NOP     1
+ADI     (Y),*   5F      2       NOP     1
+ADI     (U),*   6F      2       NOP     1
+ADI     (V),*   7F      2       NOP     1                   ; undocumented
+ADI     (*),*   EF      4       CSWAP   1
+ADI     #(X),*  FD4F    3       NOP     1
+ADI     #(Y),*  FD5f    3       NOP     1
+ADI     #(U),*  FD6F    3       NOP     1
+ADI     #(V),*  FD7F    3       NOP     1                   ; undocumented
+ADI     #(*),*  FDEF    5       CSWAP   1
+
+/* Z80 Syntax                                          */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */ 
+ADD     (BC),*  4F      2       NOP     2
+ADD     (DE),*  5F      2       NOP     2
+ADD     (HL),*  6F      2       NOP     2
+ADD     (MN),*  7F      2       NOP     2
+ADD     (*),*   EF      4       CSWAP   2
+ADD#    (BC),*  FD4F    3       NOP     2
+ADD#    (DE),*  FD5f    3       NOP     2
+ADD#    (HL),*  FD6F    3       NOP     2
+ADD#    (MN),*  FD7F    3       NOP     2
+ADD#    (*),*   FDEF    5       CSWAP   2
+
+ADD     BC,A    FDCA    2       NOP     2
+ADD     DE,A    FDDA    2       NOP     2
+ADD     HL,A    FDEA    2       NOP     2
+ADD     MN,A    FDFA    2       NOP     2
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ADR     X       FDCA    2       NOP     1
+ADR     Y       FDDA    2       NOP     1
+ADR     U       FDEA    2       NOP     1
+ADR     V       FDFA    2       NOP     1                   ; undocumented
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+AM0     ""      FDCE    2       NOP     3
+AM1     ""      FDDE    2       NOP     3
+AEX     ""      F1      1       NOP     1
+
+/* Z80 Syntax                                          */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+;AM0     LDT,A   FDCE    2       NOP     2
+;AM1     LDF,A   FDDE    2       NOP     2
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+AND     (X)     09      1       NOP     1
+AND     (Y)     19      1       NOP     1
+AND     (U)     29      1       NOP     1
+AND     (V)     39      1       NOP     1                   ; undocumented
+AND     (*)     A9      3       SWAP    1
+AND     #(X)    FD09    2       NOP     1
+AND     #(Y)    FD19    2       NOP     1
+AND     #(U)    FD29    2       NOP     1
+AND     #(V)    FD39    2       NOP     1                   ; undocumented
+AND     #(*)    FDA9    4       SWAP    1
+
+/* Z80 Syntax                                          */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+AND     A,(BC)  09      1       NOP     2
+AND     A,(DE)  19      1       NOP     2
+AND     A,(HL)  29      1       NOP     2
+AND     A,(MN)  39      1       NOP     2
+AND     A,(*)   A9      3       SWAP    2
+AND#    A,(BC)  FD09    2       NOP     2
+AND#    A,(DE)  FD19    2       NOP     2
+AND#    A,(HL)  FD29    2       NOP     2
+AND#    A,(MN)  FD39    2       NOP     2
+AND#    A,(*)   FDA9    4       SWAP    2
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ANI     A,*     B9      2       NOP     1
+ANI     (X),*   49      2       NOP     1
+ANI     (Y),*   59      2       NOP     1
+ANI     (U),*   69      2       NOP     1
+ANI     (V),*   79      2       NOP     1                   ; undocumented
+ANI     (*),*   E9      4       CSWAP   1
+ANI     #(X),*  FD49    3       NOP     1
+ANI     #(Y),*  FD59    3       NOP     1
+ANI     #(U),*  FD69    3       NOP     1
+ANI     #(V),*  FD79    3       NOP     1                   ; undocumented
+ANI     #(*),*  FDE9    5       CSWAP   1
+
+/* Z80 Syntax                                          */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+AND     A,*     B9      2       NOP     2
+AND     (BC),*  49      2       NOP     2
+AND     (DE),*  59      2       NOP     2
+AND     (HL),*  69      2       NOP     2
+AND     (MN),*  79      2       NOP     2
+AND     (*),*   E9      4       CSWAP   2
+AND#    (BC),*  FD49    3       NOP     2
+AND#    (DE),*  FD59    3       NOP     2
+AND#    (HL),*  FD69    3       NOP     2
+AND#    (MN),*  FD79    3       NOP     2
+AND#    (*),*   FDE9    5       CSWAP   2
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+ATP     ""      FDCC    2       NOP     3
+ATT     ""      FDEC    2       NOP     3
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+BCH+    *       8E      2       NOP     1
+BCH-    *       9E      2       NOP     1
+BCR+    *       81      2       NOP     1
+BCR-    *       91      2       NOP     1
+BCS+    *       83      2       NOP     1
+BCS-    *       93      2       NOP     1
+BHR+    *       85      2       NOP     1
+BHR-    *       95      2       NOP     1
+BHS+    *       87      2       NOP     1
+BHS-    *       97      2       NOP     1
+BCH     *       8E      2       R4      4     0     10
+BCR     *       81      2       R4      4     0     10
+BCS     *       83      2       R4      4     0     10
+BHR     *       85      2       R4      4     0     10
+BHS     *       87      2       R4      4     0     10
+
+/* Sharp Syntax                                        */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+BII     A,*     BF      2       NOP     1
+BII     (X),*   4D      2       NOP     1
+BII     (Y),*   5D      2       NOP     1
+BII     (U),*   6D      2       NOP     1
+BII     (V),*   7D      2       NOP     1                   ; undocumented
+BII     (*),*   ED      4       CSWAP   1
+BII     #(X),*  FD4D    3       NOP     1
+BII     #(Y),*  FD5D    3       NOP     1
+BII     #(U),*  FD6D    3       NOP     1
+BII     #(V),*  FD7D    3       NOP     1                   ; undocumented
+BII     #(*),*  FDED    5       CSWAP   1
+
+/* Sharp Syntax                           */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+BIT     (X)     0F      1       NOP     1
+BIT     (Y)     1F      1       NOP     1
+BIT     (U)     2F      1       NOP     1
+BIT     (V)     3F      1       NOP     1                   ; undocumented
+BIT     (*)     AF      3       SWAP    1
+BIT     #(X)    FD0F    2       NOP     1
+BIT     #(Y)    FD1F    2       NOP     1
+BIT     #(U)    FD2F    2       NOP     1
+BIT     #(V)    FD3F    2       NOP     1                   ; undocumented
+BIT     #(*)    FDAF    4       SWAP    1
+
+/* Sharp Syntax                           */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+BVR+    *       8D      2       NOP     1
+BVR-    *       9D      2       NOP     1
+BVS+    *       8F      2       NOP     1
+BVS-    *       9F      2       NOP     1
+BZR+    *       89      2       NOP     1
+BZR-    *       99      2       NOP     1
+BZS+    *       8B      2       NOP     1
+BZS-    *       9B      2       NOP     1
+BVR     *       8D      2       R4      4     0     10
+BVS     *       9F      2       R4      4     0     10
+BZR     *       89      2       R4      4     0     10
+BZS     *       8B      2       R4      4     0     10
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                             */
+CALL    *       BE      3       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+CDV     ""      FD8E    2       NOP     3
+CIN     ""      F7      1       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                             */
+CP      A,C     06      1       NOP     2
+CP      A,E     16      1       NOP     2
+CP      A,L     26      1       NOP     2
+CP      A,N     36      1       NOP     2
+CP      A,B     86      1       NOP     2
+CP      A,D     96      1       NOP     2
+CP      A,H     A6      1       NOP     2
+CP      A,M     B6      1       NOP     2
+CP      A,(BC)  07      1       NOP     2
+CP      A,(DE)  17      1       NOP     2
+CP      A,(HL)  27      1       NOP     2
+CP      A,(MN)  37      1       NOP     2
+CP#     A,(BC)  FD07    2       NOP     2
+CP#     A,(DE)  FD17    2       NOP     2
+CP#     A,(HL)  FD27    2       NOP     2
+CP#     A,(MN)  FD37    2       NOP     2
+CP      A,(*)   A7      3       SWAP    2
+CP#     A,(*)   FDA7    4       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                             */
+CP      A,*     B7      2       NOP     2
+CP      C,*     4E      2       NOP     2
+CP      E,*     5E      2       NOP     2
+CP      L,*     6E      2       NOP     2
+CP      N,*     7E      2       NOP     2
+CP      B,*     4C      2       NOP     2
+CP      D,*     5C      2       NOP     2
+CP      H,*     6C      2       NOP     2
+CP      M,*     7C      2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                             */
+CPI     A,(BC)  F7      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+CPA     XL      06      1       NOP     1
+CPA     YL      16      1       NOP     1
+CPA     UL      26      1       NOP     1
+CPA     VL      36      1       NOP     1                   ; undocumented
+CPA     XH      86      1       NOP     1
+CPA     YH      96      1       NOP     1
+CPA     UH      A6      1       NOP     1
+CPA     VH      B6      1       NOP     1                   ; undocumented
+CPA     (X)     07      1       NOP     1
+CPA     (Y)     17      1       NOP     1
+CPA     (U)     27      1       NOP     1
+CPA     (V)     37      1       NOP     1                   ; undocumented
+CPA     (*)     A7      3       SWAP    1
+CPA     #(X)    FD07    2       NOP     1
+CPA     #(Y)    FD17    2       NOP     1
+CPA     #(U)    FD27    2       NOP     1
+CPA     #(V)    FD37    2       NOP     1                   ; undocumented
+CPA     #(*)    FDA7    4       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+CPI     A,*     B7      2       NOP     1
+CPI     XL,*    4E      2       NOP     1
+CPI     YL,*    5E      2       NOP     1
+CPI     UL,*    6E      2       NOP     1
+CPI     VL,*    7E      2       NOP     1                   ; undocumented
+CPI     XH,*    4C      2       NOP     1
+CPI     YH,*    5C      2       NOP     1
+CPI     UH,*    6C      2       NOP     1
+CPI     VH,*    7C      2       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+DCA     (X)     8C      1       NOP     1
+DCA     (Y)     9C      1       NOP     1
+DCA     (U)     AC      1       NOP     1
+DCA     (V)     BC      1       NOP     1                   ; undocumented
+DCA     #(X)    FD8C    2       NOP     1
+DCA     #(Y)    FD9C    2       NOP     1
+DCA     #(U)    FDAC    2       NOP     1
+DCA     #(V)    FDBC    2       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+DCS     (X)     0C      1       NOP     1
+DCS     (Y)     1C      1       NOP     1
+DCS     (U)     2C      1       NOP     1
+DCS     (V)     3C      1       NOP     1                   ; undocumented
+DCS     #(X)    FD0C    2       NOP     1
+DCS     #(Y)    FD1C    2       NOP     1
+DCS     #(U)    FD2C    2       NOP     1
+DCS     #(V)    FD3C    2       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+DDR     (X)     D3      1       NOP     1
+DDR     #(X)    FDD3    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+DDR     A,(BC)  D3      1       NOP     2
+DDR#    A,(BC)  FDD3    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+DEC     A       DF      1       NOP     3
+DEC     XL      42      1       NOP     1
+DEC     YL      52      1       NOP     1
+DEC     UL      62      1       NOP     1
+DEC     VL      72      1       NOP     1                   ; undocumented
+DEC     XH      FD42    2       NOP     1
+DEC     YH      FD52    2       NOP     1
+DEC     UH      FD62    2       NOP     1
+DEC     VH      FD72    2       NOP     1                   ; undocumented
+DEC     X       46      1       NOP     1
+DEC     Y       56      1       NOP     1
+DEC     U       66      1       NOP     1
+DEC     S       76      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+DEC     C       42      1       NOP     1
+DEC     E       52      1       NOP     1
+DEC     L       62      1       NOP     1
+DEC     N       72      1       NOP     1
+DEC     B       FD42    2       NOP     1
+DEC     D       FD52    2       NOP     1
+DEC     H       FD62    2       NOP     1
+DEC     M       FD72    2       NOP     1
+DEC     BC      46      1       NOP     1
+DEC     DE      56      1       NOP     1
+DEC     HL      66      1       NOP     1
+DEC     MN      76      1       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+DI      ""      FDBE    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+DJL     -*      88      2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+DRL     A,(BC)  D7      1       NOP     2
+DRL#    A,(BC)  FDD7    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+DRL     (X)     D7      1       NOP     1
+DRL     #(X)    FDD7    2       NOP     1
+
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+EAI     *       BD      2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+EI      ""      FD81    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+EOR     (X)     0D      1       NOP     1
+EOR     (Y)     1D      1       NOP     1
+EOR     (U)     2D      1       NOP     1
+EOR     (V)     3D      1       NOP     1                   ; undocumented
+EOR     (*)     AD      3       SWAP    1
+EOR     #(X)    FD0D    2       NOP     1
+EOR     #(Y)    FD1D    2       NOP     1
+EOR     #(U)    FD2D    2       NOP     1
+EOR     #(V)    FD3D    2       NOP     1                   ; undocumented
+EOR     #(*)    FDAD    4       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+HLT     ""      FDB1    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+HALT ""         FDB1    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+INC     A       DD      1       NOP     3
+INC     XL      40      1       NOP     1
+INC     YL      50      1       NOP     1
+INC     UL      60      1       NOP     1
+INC     VL      70      1       NOP     1                   ; undocumented
+INC     XH      FD40    2       NOP     1
+INC     YH      FD50    2       NOP     1
+INC     UH      FD60    2       NOP     1
+INC     VH      FD70    2       NOP     1                   ; undocumented
+INC     X       44      1       NOP     1
+INC     Y       54      1       NOP     1
+INC     U       64      1       NOP     1
+INC     S       74      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+INC     C       40      1       NOP     2
+INC     E       50      1       NOP     2
+INC     L       60      1       NOP     2
+INC     N       70      1       NOP     2
+INC     B       FD40    2       NOP     2
+INC     D       FD50    2       NOP     2
+INC     H       FD60    2       NOP     2
+INC     M       FD70    2       NOP     2
+INC     BC      44      1       NOP     2
+INC     DE      54      1       NOP     2
+INC     HL      64      1       NOP     2
+INC     MN      74      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+ITA     ""      FDBA    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+INA     ""      FDBA    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+JMP     *       BA      3       SWAP    1
+
+/* Z80 Syntax                           */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+JR+     NC,*    81      2       NOP     2
+JR-     NC,*    91      2       NOP     2
+JR+     C,*     83      2       NOP     2
+JR-     C,*     93      2       NOP     2
+JR+     NH,*    85      2       NOP     2
+JR-     NH,*    95      2       NOP     2
+JR+     H,*     87      2       NOP     2
+JR-     H,*     97      2       NOP     2
+JR      NC,*    81      2       R4      4     0     10
+JR      C,*     83      2       R4      4     0     10
+JR      NH,*    85      2       R4      4     0     10
+JR      H,*     87      2       R4      4     0     10
+
+/* Z80 Syntax                           */
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+JR+     NV,*    8D      2       NOP     2
+JR-     NV,*    9D      2       NOP     2
+JR+     V,*     8F      2       NOP     2
+JR-     V,*     9F      2       NOP     2
+JR+     NZ,*    89      2       NOP     2
+JR-     NZ,*    99      2       NOP     2
+JR+     Z,*     8B      2       NOP     2
+JR-     Z,*     9B      2       NOP     2
+JR      NV,*    8D      2       R4      4     0     10
+JR      V,*     8F      2       R4      4     0     10
+JR      NZ,*    89      2       R4      4     0     10
+JR      Z,*     8B      2       R4      4     0     10
+
+JR+     *       8E      2       NOP     2
+JR-     *       9E      2       NOP     2
+JR      *       8E      2       R4      4     0     10
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+LDA     XL      04      1       NOP     1
+LDA     YL      14      1       NOP     1
+LDA     UL      24      1       NOP     1
+LDA     VL      34      1       NOP     1                   ; undocumented
+LDA     XH      84      1       NOP     1
+LDA     YH      94      1       NOP     1
+LDA     UH      A4      1       NOP     1
+LDA     VH      B4      1       NOP     1                   ; undocumented
+LDA     (X)     05      1       NOP     1
+LDA     (Y)     15      1       NOP     1
+LDA     (U)     25      1       NOP     1
+LDA     (V)     35      1       NOP     1                   ; undocumented
+LDA     (*)     A5      3       SWAP    1
+LDA     #(X)    FD05    2       NOP     1
+LDA     #(Y)    FD15    2       NOP     1
+LDA     #(U)    FD25    2       NOP     1
+LDA     #(V)    FD35    2       NOP     1                   ; undocumented
+LDA     #(*)    FDA5    4       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LD      A,F     FDAA    2       NOP     2
+LD      A,C     04      1       NOP     2
+LD      A,E     14      1       NOP     2
+LD      A,L     24      1       NOP     2
+LD      A,N     34      1       NOP     2
+LD      A,B     84      1       NOP     2
+LD      A,D     94      1       NOP     2
+LD      A,H     A4      1       NOP     2
+LD      A,M     B4      1       NOP     2
+LD      A,(BC)  05      1       NOP     2
+LD      A,(DE)  15      1       NOP     2
+LD      A,(HL)  25      1       NOP     2
+LD      A,(MN)  35      1       NOP     2
+LD#     A,(BC)  FD05    2       NOP     2
+LD#     A,(DE)  FD15    2       NOP     2
+LD#     A,(HL)  FD25    2       NOP     2
+LD#     A,(MN)  FD35    2       NOP     2
+LD      A,(*)   A5      3       SWAP    2
+LD#     A,(*)   FDA5    4       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LD      C,A     0A      1       NOP     2
+LD      E,A     1A      1       NOP     2
+LD      L,A     2A      1       NOP     2
+LD      N,A     3A      1       NOP     2
+LD      B,A     08      1       NOP     2
+LD      D,A     18      1       NOP     2
+LD      H,A     28      1       NOP     2
+;LD      L,A     38      1       NOP     2  ; same as NOP
+LD      (BC),A   0E     1       NOP     2   
+LD      (DE),A   1E     1       NOP     2
+LD      (HL),A   2E     1       NOP     2
+LD      (MN),A   3E     1       NOP     2
+LD#     (BC),A   FD0E   2       NOP     2
+LD#     (DE),A   FD1E   2       NOP     2
+LD#     (HL),A   FD2E   2       NOP     2
+LD#     (MN),A   FD3E   2       NOP     2
+LD      (*),A    AE     3       SWAP    2
+LD#     (*),A    FDAE   4       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LD      BC,BC    FD4A   2       NOP     2
+LD      DE,BC    FD5A   2       NOP     2
+LD      HL,BC    FD6A   2       NOP     2
+LD      MN,BC    FD7A   2       NOP     2
+LD      SP,BC    FD4E   2       NOP     2
+LD      PC,BC    FD5E   2       NOP     2
+LD      PC,*     BA     3       SWAP    2
+
+LD      BC,BC   FD08    2       NOP     2
+LD      BC,DE   FD18    2       NOP     2
+LD      BC,HL   FD28    2       NOP     2
+LD      BC,MN   FD38    2       NOP     2
+LD      BC,SP   FD48    2       NOP     2
+LD      BC,PC   FD58    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LD      A,*     B5      2       NOP     2
+LD      C,*     4A      2       NOP     2
+LD      E,*     5A      2       NOP     2
+LD      L,*     6A      2       NOP     2
+LD      N,*     7A      2       NOP     2
+LD      B,*     48      2       NOP     2
+LD      D,*     58      2       NOP     2
+LD      H,*     68      2       NOP     2
+LD      M,*     78      2       NOP     2
+LD      SP,*    AA      3       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+LDE     X       47      1       NOP     1
+LDE     Y       57      1       NOP     1
+LDE     U       67      1       NOP     1
+LDE     S       77      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LDD     A,(BC)  47      1       NOP     2
+LDD     A,(DE)  57      1       NOP     2
+LDD     A,(HL)  67      1       NOP     2
+LDD     A,(MN)  77      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LDD     (BC),A  43      1       NOP     2
+LDD     (DE),A  53      1       NOP     2
+LDD     (HL),A  63      1       NOP     2
+LDD     (MN),A  73      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LDI     A,(BC)  45      1       NOP     2
+LDI     A,(DE)  55      1       NOP     2
+LDI     A,(HL)  65      1       NOP     2
+LDI     A,(MN)  75      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+LDI     A,*     B5      2       NOP     1
+LDI     XL,*    4A      2       NOP     1
+LDI     YL,*    5A      2       NOP     1
+LDI     UL,*    6A      2       NOP     1
+LDI     VL,*    7A      2       NOP     1                   ; undocumented
+LDI     XH,*    48      2       NOP     1
+LDI     YH,*    58      2       NOP     1
+LDI     UH,*    68      2       NOP     1
+LDI     VH,*    78      2       NOP     1                   ; undocumented
+LDI     S,*     AA      3       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+LDI     (BC),A  41      1       NOP     2
+LDI     (DE),A  51      1       NOP     2
+LDI     (HL),A  61      1       NOP     2
+LDI     (MN),A  71      1       NOP     2
+LDI   (DE),(BC) F5      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+LDX     X       FD08    2       NOP     1
+LDX     Y       FD18    2       NOP     1
+LDX     U       FD28    2       NOP     1
+LDX     V       FD38    2       NOP     1                   ; undocumented
+LDX     S       FD48    2       NOP     1
+LDX     P       FD58    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+LIN     X       45      1       NOP     1
+LIN     Y       55      1       NOP     1
+LIN     U       65      1       NOP     1
+LIN     S       75      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+LOP     UL,*    88      2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+NEX     ""      F1      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+NOP     ""      38      1       NOP     3
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+OR      A,(BC)  0B      1       NOP     2
+OR      A,(DE)  1B      1       NOP     2
+OR      A,(HL)  2B      1       NOP     2
+OR      A,(MN)  3B      1       NOP     2
+OR#     A,(BC)  FD0B    2       NOP     2
+OR#     A,(DE)  FD1B    2       NOP     2
+OR#     A,(HL)  FD2B    2       NOP     2
+OR#     A,(MN)  FD3B    2       NOP     2
+OR      A,(*)   AB      3       SWAP    2
+OR#     A,(*)   FDAB    4       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+OR      A,*     BB      2       NOP     2
+OR      (BC),*  4B      2       NOP     2
+OR      (DE),*  5B      2       NOP     2
+OR      (HL),*  6B      2       NOP     2
+OR      (MN),*  7B      2       NOP     2
+OR#     (BC),*  FD4B    3       NOP     2
+OR#     (DE),*  FD5B    3       NOP     2
+OR#     (HL),*  FD6B    3       NOP     2
+OR#     (MN),*  FD7B    3       NOP     2
+OR      (*),*   EB      4       CSWAP   2
+OR#     (*),*   FDEB    5       CSWAP   2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+ORA     (X)     0B      1       NOP     1
+ORA     (Y)     1B      1       NOP     1
+ORA     (U)     2B      1       NOP     1
+ORA     (V)     3B      1       NOP     1                   ; undocumented
+ORA     (*)     AB      3       SWAP    1
+ORA     #(X)    FD0B    2       NOP     1
+ORA     #(Y)    FD1B    2       NOP     1
+ORA     #(U)    FD2B    2       NOP     1
+ORA     #(V)    FD3B    2       NOP     1                   ; undocumented
+ORA     #(*)    FDAB    4       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+ORI     A,*     BB      2       NOP     1
+ORI     (X),*   4B      2       NOP     1
+ORI     (Y),*   5B      2       NOP     1
+ORI     (U),*   6B      2       NOP     1
+ORI     (V),*   7B      2       NOP     1                   ; undocumented
+ORI     (*),*   EB      4       CSWAP   1
+ORI     #(X),*  FD4B    3       NOP     1
+ORI     #(Y),*  FD5B    3       NOP     1
+ORI     #(U),*  FD6B    3       NOP     1
+ORI     #(V),*  FD7B    3       NOP     1                   ; undocumented
+ORI     #(*),*  FDEB    5       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+POP     A       FD8A    2       NOP     3
+POP     X       FD0A    2       NOP     1
+POP     Y       FD1A    2       NOP     1
+POP     U       FD2A    2       NOP     1
+POP     V       FD3A    2       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+POP     BC      FD0A    2       NOP     2
+POP     DE      FD1A    2       NOP     2
+POP     HL      FD2A    2       NOP     2
+POP     MN      FD3A    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+PSH     A       FDC8    2       NOP     1
+PSH     X       FD88    2       NOP     1
+PSH     Y       FD98    2       NOP     1
+PSH     U       FDA8    2       NOP     1
+PSH     V       FDB8    2       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+PUSH    A       FDC8    2       NOP     2
+PUSH    BC      FD88    2       NOP     2
+PUSH    DE      FD98    2       NOP     2
+PUSH    HL      FDA8    2       NOP     2
+PUSH    MN      FDB8    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+RDP     ""      FDC0    2       NOP     3
+REC     ""      F9      1       NOP     1
+RIE     ""      FDBE    2       NOP     1
+ROL     ""      DB      1       NOP     1
+ROR     ""      D1      1       NOP     1
+RPU     ""      E3      1       NOP     3
+RPV     ""      B8      1       NOP     3
+RTI     ""      8A      1       NOP     3
+RTN     ""      9A      1       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+RCF     ""      F9      1       NOP     2
+RLA     ""      DB      1       NOP     2
+RRA     ""      D1      1       NOP     2
+RET     ""      9A      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+SBC     XL      00      1       NOP     1
+SBC     YL      10      1       NOP     1
+SBC     UL      20      1       NOP     1
+SBC     VL      30      1       NOP     1                   ; undocumented
+SBC     XH      80      1       NOP     1
+SBC     YH      90      1       NOP     1
+SBC     UH      A0      1       NOP     1
+SBC     VH      B0      1       NOP     1                   ; undocumented
+SBC     (X)     01      1       NOP     1
+SBC     (Y)     11      1       NOP     1
+SBC     (U)     21      1       NOP     1
+SBC     (V)     31      1       NOP     1                   ; undocumented
+SBC     (*)     A1      3       SWAP    1
+SBC     #(X)    FD01    2       NOP     1
+SBC     #(Y)    FD11    2       NOP     1
+SBC     #(U)    FD21    2       NOP     1
+SBC     #(V)    FD31    2       NOP     1                   ; undocumented
+SBC     #(*)    FDA1    4       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+SBC     A,C     00      1       NOP     2
+SBC     A,E     10      1       NOP     2
+SBC     A,L     20      1       NOP     2
+SBC     A,N     30      1       NOP     2
+SBC     A,B     80      1       NOP     2
+SBC     A,D     90      1       NOP     2
+SBC     A,H     A0      1       NOP     2
+SBC     A,M     B0      1       NOP     2
+SBC     A,(BC)  01      1       NOP     2
+SBC     A,(DE)  11      1       NOP     2
+SBC     A,(HL)  21      1       NOP     2
+SBC     A,(MN)  31      1       NOP     2
+SBC#    A,(BC)  FD01    2       NOP     2
+SBC#    A,(DE)  FD11    2       NOP     2
+SBC#    A,(HL)  FD21    2       NOP     2
+SBC#    A,(MN)  FD31    2       NOP     2
+SBC     A,(*)   A1      3       SWAP    2
+SBC#    A,(*)   FDA1    4       SWAP    2
+SBC     A,*     B1      2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+SBCD    A,(BC)  0C      1       NOP     2
+SBCD    A,(DE)  1C      1       NOP     2
+SBCD    A,(HL)  2C      1       NOP     2
+SBCD    A,(MN)  3C      1       NOP     2   
+SBCD    A,#(BC) FD0C    2       NOP     2
+SBCD    A,#(DE) FD1C    2       NOP     2
+SBCD    A,#(HL) FD2C    2       NOP     2
+SBCD    A,#(MN) FD3C    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+SBI     A,*     B1      2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+SBR     (C0)    C0      1       NOP     2
+SBR     (C2)    C2      1       NOP     2
+SBR     (C4)    C4      1       NOP     2
+SBR     (C6)    C6      1       NOP     2
+SBR     (C8)    C8      1       NOP     2
+SBR     (CA)    CA      1       NOP     2
+SBR     (CC)    CC      1       NOP     2
+SBR     (CE)    CE      1       NOP     2
+SBR     (D0)    D0      1       NOP     2
+SBR     (D2)    D2      1       NOP     2
+SBR     (D4)    D4      1       NOP     2
+SBR     (D6)    D6      1       NOP     2
+SBR     (D8)    D8      1       NOP     2
+SBR     (DA)    DA      1       NOP     2
+SBR     (DC)    DC      1       NOP     2
+SBR     (DE)    DE      1       NOP     2
+SBR     (E0)    E0      1       NOP     2
+SBR     (E2)    E2      1       NOP     2
+SBR     (E4)    E4      1       NOP     2
+SBR     (E6)    E6      1       NOP     2
+SBR     (E8)    E8      1       NOP     2
+SBR     (EA)    EA      1       NOP     2
+SBR     (EC)    EC      1       NOP     2
+SBR     (EE)    EE      1       NOP     2
+SBR     (F0)    F0      1       NOP     2
+SBR     (F2)    F2      1       NOP     2
+SBR     (F4)    F4      1       NOP     2
+SBR     (F6)    F6      1       NOP     2
+SBR     (F8)    F8      1       NOP     2
+SBR     (FA)    FA      1       NOP     2
+SBR     (FC)    FC      1       NOP     2
+SBR     (FE)    FE      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+SBR     NC,*    C1      2       NOP     1
+SBR     C,*     C3      2       NOP     1
+SBR     NH,*    C5      2       NOP     1
+SBR     H,*     C7      2       NOP     1
+SBR     V,*     CF      2       NOP     1
+SBR     NZ,*    C9      2       NOP     1
+SBR     Z,*     CB      2       NOP     1
+SBR     *       CD      2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+SDE     X       43      1       NOP     1
+SDE     Y       53      1       NOP     1
+SDE     U       63      1       NOP     1
+SDE     V       73      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+SDP     ""      FDC1    2       NOP     3
+SEC     ""      FB      1       NOP     1
+SHL     ""      D9      1       NOP     1
+SHR     ""      D5      1       NOP     1
+SIE     ""      FD81    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+SCF     ""      FB      1       NOP     2
+SLA     ""      D9      1       NOP     2
+SRL     ""      D5      1       NOP     2
+SPU     ""      E1      1       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+SIN     X       41      1       NOP     1
+SIN     Y       51      1       NOP     1
+SIN     U       61      1       NOP     1
+SIN     V       71      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+SJP     *       BE      3       SWAP    1
+SPU     ""      E1      1       NOP     3
+SPV     ""      A8      1       NOP     3
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+STA     XL      0A      1       NOP     1
+STA     YL      1A      1       NOP     1
+STA     UL      2A      1       NOP     1
+STA     VL      3A      1       NOP     1                   ; undocumented
+STA     XH      08      1       NOP     1
+STA     YH      18      1       NOP     1
+STA     UH      28      1       NOP     1
+;STA    VH      38      1       NOP     1  ; same as NOP    ; undocumented
+STA     (X)     0E      1       NOP     1
+STA     (Y)     1E      1       NOP     1
+STA     (U)     2E      1       NOP     1
+STA     (V)     3E      1       NOP     1                   ; undocumented
+STA     (*)     AE      3       SWAP    1
+STA     #(X)    FD0E    2       NOP     1
+STA     #(Y)    FD1E    2       NOP     1
+STA     #(U)    FD2E    2       NOP     1
+STA     #(V)    FD3E    2       NOP     1                   ; undocumented
+STA     #(*)    FDAE    4       SWAP    1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+STX     X       FD4A    2       NOP     1
+STX     Y       FD5A    2       NOP     1
+STX     U       FD6A    2       NOP     1
+STX     V       FD7A    2       NOP     1                   ; undocumented
+STX     S       FD4E    2       NOP     1
+STX     P       FD5E    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+TEST    A,(BC)  0F      1       NOP     2 
+TEST    A,(DE)  1F      1       NOP     2
+TEST    A,(HL)  2F      1       NOP     2
+TEST    A,(MN)  3F      1       NOP     2
+TEST#   A,(BC)  FD0F    2       NOP     2
+TEST#   A,(DE)  FD1F    2       NOP     2
+TEST#   A,(HL)  FD2F    2       NOP     2
+TEST#   A,(MN)  FD3F    2       NOP     2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+TEST    A,(*)   AF      3       SWAP    2
+TEST    A,*     BF      2       NOP     2
+TEST#   A,(*)   FDAF    4       SWAP    2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+TEST    (BC),*  4D      2       NOP     2
+TEST    (DE),*  5D      2       NOP     2
+TEST    (HL),*  6D      2       NOP     2
+TEST    (MN),*  7D      2       NOP     2
+TEST    (*),*   ED      4       CSWAP   2
+TEST#   (BC),*  FD4D    3       NOP     2
+TEST#   (DE),*  FD5D    3       NOP     2
+TEST#   (HL),*  FD6D    3       NOP     2
+TEST#   (MN),*  FD7D    3       NOP     2
+TEST#   (*),*   FDED    5       CSWAP   2
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+TIN     ""      F5      1       NOP     1
+TTA     ""      FDAA    2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+VCR     *       C1      2       NOP     1
+VCS     *       C3      2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+VEJ     (C0)    C0      1       NOP     1
+VEJ     (C2)    C2      1       NOP     1
+VEJ     (C4)    C4      1       NOP     1
+VEJ     (C6)    C6      1       NOP     1
+VEJ     (C8)    C8      1       NOP     1
+VEJ     (CA)    CA      1       NOP     1
+VEJ     (CC)    CC      1       NOP     1
+VEJ     (CE)    CE      1       NOP     1
+VEJ     (D0)    D0      1       NOP     1
+VEJ     (D2)    D2      1       NOP     1
+VEJ     (D4)    D4      1       NOP     1
+VEJ     (D6)    D6      1       NOP     1
+VEJ     (D8)    D8      1       NOP     1
+VEJ     (DA)    DA      1       NOP     1
+VEJ     (DC)    DC      1       NOP     1
+VEJ     (DE)    DE      1       NOP     1
+VEJ     (E0)    E0      1       NOP     1
+VEJ     (E2)    E2      1       NOP     1
+VEJ     (E4)    E4      1       NOP     1
+VEJ     (E6)    E6      1       NOP     1
+VEJ     (E8)    E8      1       NOP     1
+VEJ     (EA)    EA      1       NOP     1
+VEJ     (EC)    EC      1       NOP     1
+VEJ     (EE)    EE      1       NOP     1
+VEJ     (F0)    F0      1       NOP     1
+VEJ     (F2)    F2      1       NOP     1
+VEJ     (F4)    F4      1       NOP     1
+VEJ     (F6)    F6      1       NOP     1
+VEJ     (F8)    F8      1       NOP     1                   ; undocumented
+VEJ     (FA)    FA      1       NOP     1                   ; undocumented
+VEJ     (FC)    FC      1       NOP     1                   ; undocumented
+VEJ     (FE)    FE      1       NOP     1                   ; undocumented
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Sharp Syntax                           */
+VHR     *       C5      2       NOP     1
+VHS     *       C7      2       NOP     1
+VMJ     *       CD      2       NOP     1
+VVS     *       CF      2       NOP     1
+VZR     *       C9      2       NOP     1
+VZS     *       CB      2       NOP     1
+
+/*INSTR ARGS    OP      BYTES   RULE    CLASS SHIFT OR */
+/* Z80 Syntax                           */
+XOR     A,(BC)  0D      1       NOP     2
+XOR     A,(DE)  1D      1       NOP     2
+XOR     A,(HL)  2D      1       NOP     2
+XOR     A,(MN)  3D      1       NOP     2
+XOR#    A,(BC)  FD0D    2       NOP     2
+XOR#    A,(DE)  FD1D    2       NOP     2
+XOR#    A,(HL)  FD2D    2       NOP     2
+XOR#    A,(MN)  FD3D    2       NOP     2
+XOR     A,(*)   AD      3       SWAP    2
+XOR     A,*     BD      2       NOP     2
+XOR#    A,(*)   FDAD    4       SWAP    2

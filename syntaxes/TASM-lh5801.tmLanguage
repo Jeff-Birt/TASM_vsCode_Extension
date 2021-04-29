@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>asm</string>
+		<string>s</string>
+		<string>$C</string>
+	</array>
+	<key>name</key>
+	<string>TASM_lh5801 Assembly</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>;.*$</string>
+			<key>name</key>
+			<string>comment.line</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>TASM Directives</string>
+			<key>match</key>
+			<string>(?i)(\b(#ADDINSTR|#AVSYM|#BASIC|#CHK|#CODES|#NOCODES|#DEFINE|#DEFCONT|#ECHO|#EJECT|#ELSE|#END|#ENDIF|#EQU|#EXPORT|#FILL|#IFDEF|#IFNDEF|#IF|#INCLUDE|#LIST|#NOLIST|#LOCALLABELCHAR|#LSFIRST|#MSFIRST|#MODULE|#ORG|#PAGE|#NOPAGE|#SET|#SYM|#AVSYM|#TEST|#TITLE)\b)</string>
+			<key>name</key>
+			<string>keyword.control.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Asm data definition directives</string>
+			<key>match</key>
+			<string>(?i)(\b(.block|.bseg|.cseg|.dseg|.nseg|.xseg|.byte|.db|.dw|.word)\b)</string>
+			<key>name</key>
+			<string>storage.type.datadef.asm</string>
+		</dict>		
+		<dict>
+		<key>comment</key>
+			<string>Flags</string>
+			<key>match</key>
+			<string>\b(C|NC|V|NV|H|NH|Z|NZ|IE)\b</string>
+			<key>name</key>
+			<string>support.type.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Single-line string</string>
+			<key>match</key>
+			<string>'[^']*'</string>
+			<key>name</key>
+			<string>string.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Single-line string</string>
+			<key>match</key>
+			<string>"[^"]*"</string>
+			<key>name</key>
+			<string>string.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>lh5801 Mnemonics</string>
+			<key>match</key>			
+			<string>(?i)(\b(ADC|ADI|ADR|AM0|AM1|AEX|AND|ANI|ATP|ATT|BCH|BCR|BCS|BHR|BHS|BII|BIT|BVR|BVS|BZR|BZS|CDV|CIN|CPA|CPI|DCA|DCS|DEC|DRL|DDR|EAI|EOR|HLT|INC|ITA|JMP|LDA|LDE|LDI|LDX|LIN|LOP|NOP|ORA|ORI|POP|PSH|RDP|REC|RIE|ROL|ROR|RPU|RPV|RTI|RTN|SBC|SBI|SDE|SDP|SEC|SHL|SHR|SIE|SIN|SJP|SPU|SPV|STA|STX|TIN|TTA|VCR|VCS|VEJ|VHR|VHS|VMJ|VVS|VZR|VZS|ADC#|ADCD|ADD|AND#|CALL|CP|CP#|DI|DJL|DRL#|DRR|DRR#|EI|HALT|INA|NC|JR|JR|LD|LD#|LDD|NEX|OR|OR#|PUSH|RCF|RDP|RET|RLA|RRA|SBC#|SBCD|SBR|SCF|SDP|SLA|SRL|TEST|TEST#|XOR|XOR#)\b)</string>
+			<key>name</key>
+			<string>keyword.mnemonic.asm</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\d{5}</string>
+			<key>name</key>
+			<string>invalid</string>
+		</dict>
+		<dict>
+		<key>comment</key>
+			<string>8 bit register set</string>
+			<key>match</key>
+			<string>(?i)(\b(xl|yl|ul|vl|xh|yh|uh|vh|vl|a|ph|pl|sl|sh|tc|e|l|n|b|d|h|m|f)\b)</string>
+			<key>name</key>
+			<string>variable.parameter.register.asm</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>16 bit register set</string>
+			<key>match</key>
+			<string>(?i)(\baf')|(\b(pc|x|y|u|v|p|s|tm|pc|bc|de|hl|mn|sp|pc)\b)</string>
+			<key>name</key>
+			<string>variable.parameter.register.asm</string>
+		</dict>	
+		<dict>
+			<key>comment</key>
+			<string>HEX/DEC/BIN number</string>
+			<key>match</key>
+			<string>(?i)(%[01]+\b)|(\b[01]+b\b)|((#|\$)[0-9a-f]+\b)|(\b([0-9]+|0x[0-9a-f]+|[0-9][0-9a-f]*h)\b)</string>
+			<key>name</key>
+			<string>constant.numeric.asm</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.tasmlh5801</string>
+	<key>uuid</key>
+	<string>5075ff92-54a7-11e6-beb8-9e7112acae89</string>
+</dict>
+</plist>

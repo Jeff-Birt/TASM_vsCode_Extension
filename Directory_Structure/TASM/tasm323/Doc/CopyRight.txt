@@ -1,0 +1,12 @@
+The Telemark Assembler Copyright Notification
+
+The files on this disk are:
+Copyright 1985-2015 by Thomas N. Anderson, all rights reserved.
+
+
+        Thomas N. Anderson
+        Squak Valley Software
+        837 Front Street South
+        Issaquah, WA  98027
+
+	email:  tnetherly@comcast.net

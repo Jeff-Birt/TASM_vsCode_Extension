@@ -1,0 +1,9 @@
+/* Note1: R4 relative branch rule added to TASM 3.23 by Jeff Birt.
+/*        Supports the Sharp lh5801's separate forward/back branch instructions
+/*        that take a full unsigned byte as an argument. This modification
+/*        allows use such as: BZR label_name
+/*
+/*        For older version add the following two macros to your project:       
+/*        #define   BRB(n)    $+2-n  ; calculate backward branch
+/*        #define   BRF(n)    $+n    ; calculate forward branch
+/*        use: BCH- (BRB(label_name)) or BCH+ (BRF(label_name))

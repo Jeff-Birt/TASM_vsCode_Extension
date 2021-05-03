@@ -1,0 +1,13 @@
+These are a few simple samples for the Sharp lh5801 processor
+used on the Sharp PC-1500 (TRS-80 PC2)
+
+To assemble a particular file un-remark the appropriate line
+build.bat. FOr example here 'inA.lh5801.asm' will be the file assembled.
+You can also choose to assemble the Sharp or Z*) syntax version
+of each file by commenting/un-commenting the associated lines.
+A BASIC loader for each program is given at the top of the file in the
+remarks.
+
+REM ..\..\TASM\tasm323\Tasm323.exe -g3 -x7 -5801 add2num.lh5801.asm
+REM ..\..\TASM\tasm323\Tasm323.exe -g3 -x7 -5801 screenInvert.lh5801.asm
+..\..\TASM\tasm323\Tasm323.exe -g3 -x7 -5801 incA.lh5801.asm
